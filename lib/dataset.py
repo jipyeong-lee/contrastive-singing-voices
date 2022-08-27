@@ -23,8 +23,9 @@ class DefaultSet(Dataset):
         self.input_len = input_len
         self.fft = transforms.Spectrogram(n_fft=n_fft)
 
-        with open(os.path.join(root, subset + '.csv')) as input_csv:
-            self.files, labels = zip(*[(row[0], row[1]) for row in csv.reader(input_csv)])
+        data = pd.read_csv(os.path.join(root, subset + '.csv'))
+        self.files = tuple(data['vocal'])
+        labels = tuple(data['label'])
 
         uniq_labels = sorted(set(labels))
         self.num_classes = len(uniq_labels)
