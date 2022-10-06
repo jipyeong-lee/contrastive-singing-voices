@@ -11,7 +11,7 @@ scipy==1.7.3
 six==1.16.0
 SoundFile==0.10.3.post1
 tensorboard-logger==0.1.0
-torch==1.11.0
+torch>=1.11.0
 torchaudio==0.11.0
 torchvision==0.12.0
 tqdm==4.64.0
