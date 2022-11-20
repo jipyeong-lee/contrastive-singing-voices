@@ -49,8 +49,9 @@ class CRNN2D_elu2(nn.Module):
         self.mp4_1 = nn.MaxPool2d((4, 2), stride=(4, 2))
         self.drop4_1 = nn.Dropout2d(p=dropout)
 
-        self.gru1 = nn.GRU(128, 32, num_layers=1, batch_first=True)
-        self.gru2 = nn.GRU(32, 32, num_layers=1, batch_first=True)
+        self.gru1 = nn.GRU(384, 128, num_layers=1, batch_first=True)
+        self.gru2 = nn.GRU(128, 32, num_layers=1, batch_first=True)
+        self.gru3 = nn.GRU(32, 32, num_layers=1, batch_first=True)
         self.drop5 = nn.Dropout(p=dropout)
 
         self.linear1 = nn.Linear(288, feat_dim)
@@ -83,6 +84,9 @@ class CRNN2D_elu2(nn.Module):
         # print(x.size())
 
         x, h = self.gru2(x, h)
+        # print(x.size())
+        
+        x, h = self.gru3(x, h)
         # print(x.size())
 
         x = self.drop5(x)
