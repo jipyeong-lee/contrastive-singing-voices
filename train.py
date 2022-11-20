@@ -86,7 +86,7 @@ def parse_options():
 
 
 def set_model(opts, n_data):
-    model = CRNN2D_elu(input_size=1 + opts.n_fft // 2, feat_dim=opts.feat_dim, dropout=opts.dropout)
+    model = CRNN2D_elu2(input_size=1 + opts.n_fft // 2, feat_dim=opts.feat_dim, dropout=opts.dropout)
     if opts.pitch == 'neg' or opts.stretch == 'neg':
         contrast = NCEAverageNeg(opts.feat_dim, n_data, opts.nce_k, opts.nce_t, opts.nce_m, opts.softmax)
     else:
