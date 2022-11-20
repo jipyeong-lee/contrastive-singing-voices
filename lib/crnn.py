@@ -49,8 +49,8 @@ class CRNN2D_elu2(nn.Module):
         self.mp4_1 = nn.MaxPool2d((4, 2), stride=(4, 2))
         self.drop4_1 = nn.Dropout2d(p=dropout)
 
-        self.gru1 = nn.GRU(384, 128, num_layers=1, batch_first=True)
-        self.gru2 = nn.GRU(128, 32, num_layers=1, batch_first=True)
+        self.gru1 = nn.GRU(384, 32, num_layers=1, batch_first=True)
+        #self.gru2 = nn.GRU(128, 32, num_layers=1, batch_first=True)
         self.gru3 = nn.GRU(32, 32, num_layers=1, batch_first=True)
         self.drop5 = nn.Dropout(p=dropout)
 
@@ -62,32 +62,32 @@ class CRNN2D_elu2(nn.Module):
 
         x = self.Bn0(x)
         x = x[:, None, :, :]
-        # print(x.size())
+        #print(x.size())
 
         x = self.drop1(self.mp1(self.Bn1(self.elu(self.Conv1_1(self.Conv1(x))))))
-        # print(x.size())
+        #print(x.size())
 
         x = self.drop2(self.mp2(self.Bn2(self.elu(self.Conv2_1(self.Conv2(x))))))
-        # print(x.size())
+        #print(x.size())
 
         x = self.drop3(self.mp3(self.Bn3(self.elu(self.Conv3_1(self.Conv3(x))))))
-        # print(x.size())
+        #print(x.size())
 
         x = self.drop4(self.mp4(self.Bn4(self.elu(self.Conv4_1(self.Conv4(x))))))
-        # print(x.size())
+        #print(x.size())
 
         x = x.transpose(1, 3)
         x = torch.reshape(x, (x.size(0), x.size(1), -1))
-        # print(x.size())
+        #print(x.size())
 
         x, h = self.gru1(x, h)
-        # print(x.size())
+        #print(x.size())
 
-        x, h = self.gru2(x, h)
-        # print(x.size())
+#         x, h = self.gru2(x, h)
+#         print(x.size())
         
         x, h = self.gru3(x, h)
-        # print(x.size())
+        #print(x.size())
 
         x = self.drop5(x)
         x = torch.reshape(x, (x.size(0), -1))
