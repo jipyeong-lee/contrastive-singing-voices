@@ -18,7 +18,7 @@ from torch.utils.data import DataLoader
 import torchvision
 from torchvision import models
 
-from lib.crnn import CRNN2D_elu
+from lib.crnn import CRNN2D_elu2
 from lib.dataset import ContrastiveSet
 from lib.nce_average import NCEAverage, NCEAverageNeg
 from lib.nce_criterion import NCECriterion, NCESoftmaxLoss
