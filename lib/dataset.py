@@ -20,7 +20,7 @@ class DefaultSet(Dataset):
     def __init__(self, root, subset, input_len, n_fft, sample_rate=None):
         super().__init__()
 
-        self.sample_rate = 44100 if sample_rate is None else sample_rate
+        self.sample_rate = 16000 if sample_rate is None else sample_rate
         self.input_len = input_len
         self.fft = transforms.Spectrogram(n_fft=n_fft)
 
@@ -35,10 +35,10 @@ class DefaultSet(Dataset):
 
     def load(self, index):
         audio, sample_rate = torchaudio.load(self.files[index])
-        if sample_rate != 44100:
-            transform = transforms.Resample(sample_rate, 44100)
+        if sample_rate != 16000:
+            transform = transforms.Resample(sample_rate, 16000)
             audio = transform(audio)
-            sample_rate = 44100
+            sample_rate = 16000
         assert sample_rate == self.sample_rate
         return torch.unsqueeze(torch.mean(audio, axis=0), dim=0)  # make it mono
 
