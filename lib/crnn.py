@@ -49,16 +49,17 @@ class CRNN2D_elu2(nn.Module):
         self.mp4_1 = nn.MaxPool2d((4, 2), stride=(4, 2))
         self.drop4_1 = nn.Dropout2d(p=dropout)
 
-        self.gru1 = nn.GRU(384, 32, num_layers=1, batch_first=True)
-        #self.gru2 = nn.GRU(128, 32, num_layers=1, batch_first=True)
-        self.gru3 = nn.GRU(32, 32, num_layers=1, batch_first=True)
+        self.gru1 = nn.GRU(384, 64, num_layers=1, batch_first=True)
+        #self.gru2 = nn.GRU(128, 64, num_layers=1, batch_first=True)
+        self.gru3 = nn.GRU(64, 64, num_layers=1, batch_first=True)
         self.drop5 = nn.Dropout(p=dropout)
 
-        self.linear1 = nn.Linear(288, feat_dim)
+        self.linear1 = nn.Linear(3200, 512)
+        self.linear2 = nn.Linear(512, feat_dim)
 
     def forward(self, x):
         x = x.squeeze(1)
-        h = torch.randn(1, x.size(0), 32).cuda()
+        h = torch.randn(1, x.size(0), 64).cuda()
 
         x = self.Bn0(x)
         x = x[:, None, :, :]
@@ -83,8 +84,8 @@ class CRNN2D_elu2(nn.Module):
         x, h = self.gru1(x, h)
         #print(x.size())
 
-#         x, h = self.gru2(x, h)
-#         print(x.size())
+        #x, h = self.gru2(x, h)
+        #print(x.size())
         
         x, h = self.gru3(x, h)
         #print(x.size())
@@ -95,6 +96,8 @@ class CRNN2D_elu2(nn.Module):
 
         x = self.linear1(x)
         # print(x.size())
+        
+        x = self.linear2(x)
 
         return x
 
