@@ -54,8 +54,8 @@ class CRNN2D_elu2(nn.Module):
         self.gru3 = nn.GRU(64, 64, num_layers=1, batch_first=True)
         self.drop5 = nn.Dropout(p=dropout)
 
-        self.linear1 = nn.Linear(3200, 512)
-        self.linear2 = nn.Linear(512, feat_dim)
+        self.linear1 = nn.Linear(1280, 256)
+        self.linear2 = nn.Linear(256, feat_dim)
 
     def forward(self, x):
         x = x.squeeze(1)
