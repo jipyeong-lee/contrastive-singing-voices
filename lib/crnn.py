@@ -54,7 +54,7 @@ class CRNN2D_elu2(nn.Module):
         self.gru3 = nn.GRU(64, 64, num_layers=1, batch_first=True)
         self.drop5 = nn.Dropout(p=dropout)
 
-        self.linear1 = nn.Linear(480, 128)
+        self.linear1 = nn.Linear(448, 128)
         self.linear2 = nn.Linear(128, feat_dim)
 
     def forward(self, x):
@@ -92,7 +92,7 @@ class CRNN2D_elu2(nn.Module):
 
         x = self.drop5(x)
         x = torch.reshape(x, (x.size(0), -1))
-        # print(x.size())
+        #print(x.size())
 
         x = self.linear1(x)
         # print(x.size())
