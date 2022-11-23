@@ -18,7 +18,7 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from torchvision import models
 
-from lib.crnn import CRNN2D_elu
+from lib.crnn import CRNN2D_elu2
 from lib.dataset import DefaultSet
 from lib.utils import AverageMeter
 
@@ -97,7 +97,7 @@ def main(opts):
     checkpoint = torch.load(opts.model_path)
 
     opts.feat_dim = checkpoint['opts'].feat_dim
-    encoder = CRNN2D_elu(input_size=1 + checkpoint['opts'].n_fft // 2, feat_dim=checkpoint['opts'].feat_dim, dropout=0)
+    encoder = CRNN2D_elu2(input_size=1 + checkpoint['opts'].n_fft // 2, feat_dim=checkpoint['opts'].feat_dim, dropout=0)
 
     state_dict = {key.partition('module.')[2]: checkpoint['model'][key] for key in checkpoint['model'].keys()}
     encoder.load_state_dict(state_dict, strict=True)
